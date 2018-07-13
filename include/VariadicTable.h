@@ -33,10 +33,10 @@ enum class VariadicTableColumnFormat
  * with header names: "Name", "Weight", "Age", "Brother"
  *
  * You would invoke the table like so:
- * VariadicTable<std::string, double, int, std::string> vt({"Name", "Weight", "Age", "Brother"});
+ * VariadicTable<std::string, double, int, std::string> vt("Name", "Weight", "Age", "Brother");
  *
  * Then add the data to the table:
- * vt.addRow({"Fred", 193.4, 35, "Sam"});
+ * vt.addRow("Fred", 193.4, 35, "Sam");
  *
  * And finally print it:
  * vt.print();
@@ -69,11 +69,11 @@ public:
    * Add a row of data
    *
    * Easiest to use like:
-   * table.addRow({data1, data2, data3});
+   * table.addRow(data1, data2, data3);
    *
    * @param data A Tuple of data to add
    */
-  void addRow(std::tuple<Ts...> data) { _data.push_back(data); }
+  void addRow(Ts... entries) { _data.emplace_back(std::make_tuple(entries...)); }
 
   /**
    * Pretty print the table of data
