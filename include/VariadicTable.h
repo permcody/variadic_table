@@ -1,5 +1,20 @@
-#ifndef VARIADICTABLE_H
-#define VARIADICTABLE_H
+//* This file is part of the MOOSE framework
+//* https://www.mooseframework.org
+//*
+//* All rights reserved, see COPYRIGHT for full restrictions
+//* https://github.com/idaholab/moose/blob/master/COPYRIGHT
+//*
+//* Licensed under LGPL 2.1, please see LICENSE for details
+//* https://www.gnu.org/licenses/lgpl-2.1.html
+
+#pragma once
+/**
+ * Note!  This class comes from https://github.com/friedmud/variadic_table
+ *
+ *
+ * DO NOT MODIFY THIS CLASS HERE... MODIFY IT THERE AND COPY IT HERE
+ *
+ */
 
 #include <iostream>
 #include <iomanip>
@@ -33,10 +48,10 @@ enum class VariadicTableColumnFormat
  * with header names: "Name", "Weight", "Age", "Brother"
  *
  * You would invoke the table like so:
- * VariadicTable<std::string, double, int, std::string> vt({"Name", "Weight", "Age", "Brother"});
+ * VariadicTable<std::string, double, int, std::string> vt("Name", "Weight", "Age", "Brother");
  *
  * Then add the data to the table:
- * vt.addRow({"Fred", 193.4, 35, "Sam"});
+ * vt.addRow("Fred", 193.4, 35, "Sam");
  *
  * And finally print it:
  * vt.print();
@@ -73,7 +88,7 @@ public:
    *
    * @param data A Tuple of data to add
    */
-  void addRow(std::tuple<Ts...> data) { _data.push_back(data); }
+  void addRow(Ts... entries) { _data.emplace_back(std::make_tuple(entries...)); }
 
   /**
    * Pretty print the table of data
@@ -380,5 +395,3 @@ protected:
   /// Precision For each column
   std::vector<int> _precision;
 };
-
-#endif
